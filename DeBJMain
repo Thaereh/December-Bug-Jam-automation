@@ -1,1 +1,104 @@
+MainPage:
+    # header/title
+    TITLE = (By.XPATH, "//h1[normalize-space()='RecommenDead']")
+    HUMAN_ICON = (By.CSS_SELECTOR, "img.header__avatar")
+    BTN_MOON = (By.CSS_SELECTOR, "button.nav__moon")
+    # dropdown menu
+    MENU_LOGIN = (By.XPATH, "//button[normalize-space()='Login']")
+    MENU_SIGNUP = (By.XPATH, "//button[normalize-space()='Sign Up']")
+    # search section
+    SEARCH_INPUT = (By.CSS_SELECTOR, "input#search-input")
+    BTN_SEARCH = (By.CSS_SELECTOR, "button.search-btn")
+    SEARCH_ERROR = (By.CSS_SELECTOR, "p.search-error")
+    PLUS_ICON = (By.CSS_SELECTOR, "button.search-add")
+    QUERY_TAGS = (By.CSS_SELECTOR, ".search-query-tag")
+    REMOVE_QUERY_BUTTON = (By.CSS_SELECTOR, ".remove-query")
+    MAX_QUERY_MESSAGE = (By.XPATH, "//*[contains(text(),'Maximum three search queries')]")
+    # Results
+    POSTER_CARD = (By.CSS_SELECTOR, ".poster-container")
+    MOVIE_POSTER = (By.CSS_SELECTOR, ".poster-container img")
+    MOVIE_TITLE = (By.CSS_SELECTOR, ".poster-title")
+    NO_RESULTS_MSG = (By.XPATH, "//p[contains(text(),'Please search for something else')]")
+    # poster action
+    BTN_CLEAR = (By.CSS_SELECTOR, "button.btn-clear")
+    BTN_SAVE = (By.CSS_SELECTOR, "button.btn-save")
+    # save items
+    SAVED_LIST_CONTAINER = (By.CSS_SELECTOR, ".saved-list")
+    SAVED_POSTER_ITEMS = (By.CSS_SELECTOR, ".saved-list .poster-item")
+
+    def __init__(self, driver):
+        self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
+
+    def open(self, url):
+        self.driver.get(url)
+
+    def is_title_visible(self):
+        return self.wait.until(EC.visibility_of_element_located(self.TITLE))
+
+    def click_human_icon(self):
+        self.wait.until(EC.element_to_be_clickable(self.HUMAN_ICON)).click()
+    def click_moon_icon(self):
+        self.wait.until(EC.visibility_of_element_located(self.BTN_MOON)).click()
+    def click_menu_login(self):
+        self.wait.until(EC.visibility_of_element_located(self.MENU_LOGIN)).click()
+    def click_signup(self):
+        self.wait.until(EC.visibility_of_element_located(self.MENU_LOGIN)).click()
+    def get_login_and_signup(self):
+        login = self.wait.until(EC.visibility_of_element_located(self.MENU_LOGIN))
+        signup = self.wait.until(EC.visibility_of_element_located(self.MENU_SIGNUP))
+        return login, signup
+    def click_search_input(self):
+        self.wait.until(EC.visibility_of_element_located(self.SEARCH_INPUT)).click()
+    def set_search_text(self, text):
+        field = self.wait.until(EC.visibility_of_element_located(self.SEARCH_INPUT))
+        field.clear()
+        field.send_keys(text)
+    def click_plus(self):
+        self.wait.until(EC.element_to_be_clickable(self.PLUS_ICON)).click()
+    def get_query_tags(self):
+        return self.driver.find_elements(*self.QUERY_TAGS)
+    def get_max_query_message(self):
+        elems = self.driver.find_elements(*self.MAX_QUERY_MESSAGE)
+        return elems[0].text.strip() if elems else None
+    def posters_exist(self):
+        return len(self.driver.find_elements(*self.POSTER_CARD)) == 1
+    def search_error(self):
+        return self.wait.until(EC.visibility_of_element_located(self.SEARCH_ERROR))
+    def click_poster_card(self):
+        self.wait.until(EC.visibility_of_element_located(self.POSTER_CARD)).click()
+    def click_movie_poster(self):
+        self.wait.until(EC.visibility_of_element_located(self.MOVIE_POSTER)).click()
+    def click_movie_title(self):
+        self.wait.until(EC.visibility_of_element_located(self.MOVIE_TITLE)).click()
+    def no_results_msg(self):
+        return self.wait.until(EC.visibility_of_element_located(self.NO_RESULTS_MSG))
+    def get_no_results_message(self):
+        elems = self.driver.find_elements(*self.NO_RESULTS_MSG)
+        return elems[0].text.strip() if elems else None
+    def btn_clear(self):
+        return self.wait.until(EC.visibility_of_element_located(self.BTN_CLEAR))
+    def btn_save(self):
+        return self.wait.until(EC.visibility_of_element_located(self.BTN_SAVE))
+    def saved_list_container(self):
+        return self.wait.until(EC.visibility_of_element_located(self.SAVED_LIST_CONTAINER))
+    def save_poster_items(self):
+        return self.wait.until(EC.visibility_of_element_located(self.SAVED_POSTER_ITEMS))
+    def enter_search_text(self, text):
+        field = self.wait.until(EC.visibility_of_element_located(self.SEARCH_INPUT))
+        field.clear()
+        field.send_keys(text)
+    def submit_search(self):
+        self.wait.until(EC.element_to_be_clickable(self.PLUS_ICON)).click()
+
+    def get_posters(self):
+        return self.driver.find_elements(*self.POSTER_CARD)
+
+    def get_poster_titles(self):
+        return [p.text.lower() for p in self.driver.find_elements(*self.MOVIE_TITLE)]
+
+
+
+
+
 
