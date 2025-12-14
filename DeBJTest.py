@@ -1,6 +1,4 @@
 # tests/test_landing_page.py
-from DeBJMain import EC
-
 from DeBJMain import MainPage
 
 def test_landing_page_title_and_buttons(driver, base_url):
