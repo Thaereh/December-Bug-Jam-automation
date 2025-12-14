@@ -1,4 +1,7 @@
-MainPage:
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+class MainPage:
     # header/title
     TITLE = (By.XPATH, "//h1[normalize-space()='RecommenDead']")
     HUMAN_ICON = (By.CSS_SELECTOR, "img.header__avatar")
